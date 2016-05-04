@@ -1,21 +1,21 @@
 function [cornerMap,R] = harrisCorner(imgIn,sigma1,sigma2,k)
 	if(~exist('sigma1','var'))
-		sigma1 = 1.5;
+		sigma1 = 0.5;
 	end
 	if(~exist('sigma2','var'))
-		sigma2 = 1.5;
+		sigma2 = 0.5;
 	end
 	if(~exist('k','var'))
 		k = 0.04;
 	end
 	if(size(imgIn,3) == 3)
-		grayImg = rgb2gray(imgIn);
+		grayImg = rgb2gray(imgIn/255);
 	elseif(size(imgIn,3) == 1)
 		grayImg = imgIn;
 	end
 	g_denoise = fspecial('gaussian', [3 3], sigma1);
 	grayImg = imfilter(grayImg,g_denoise,'same','conv');
-	g = fspecial('gaussian',[8 8],sigma2);
+	g = fspecial('gaussian',[3 3],sigma2);
 	[Gx, Gy] = imgradientxy(grayImg,'prewitt');
 	Gx2 = Gx .* Gx;
 	Gy2 = Gy .* Gy;
