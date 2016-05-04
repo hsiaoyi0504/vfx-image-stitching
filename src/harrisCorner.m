@@ -10,6 +10,7 @@ function [cornerMap,R] = harrisCorner(imgIn,sigma1,sigma2,k)
 	end
 	if(size(imgIn,3) == 3)
 		grayImg = rgb2gray(imgIn/255);
+		grayImg = grayImg * 255;
 	elseif(size(imgIn,3) == 1)
 		grayImg = imgIn;
 	end
@@ -28,4 +29,8 @@ function [cornerMap,R] = harrisCorner(imgIn,sigma1,sigma2,k)
 	traceH = Sx2 + Sy2;
 	R = detH - k * (traceH.^2);
 	cornerMap = imregionalmax(R);
+	cornerMap(:,1:2) = 0;
+	cornerMap(1:2,:) = 0;
+	cornerMap(:,end-2:end) = 0;
+	cornerMap(end-2:end,:) = 0;
 end
