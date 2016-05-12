@@ -1,4 +1,4 @@
-function [imgOut] = cylindricalProjection(imgIn,f)
+function [imgOut,rangeY,rangeX] = cylindricalProjection(imgIn,f)
 	imgOut = zeros(size(imgIn));
 	rangeY = floor(f * atan(size(imgIn,1)/f));
 	rangeX = size(imgIn,2);
