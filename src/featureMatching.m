@@ -8,8 +8,6 @@ function [featuresMatchRow1,featuresMatchRow2,featuresMatchCol1,featuresMatchCol
     [idx1,distance1] = knnsearch(ehSearcher1,features2,'K',2,'Distance','euclidean');
     ehSearcher2 = ExhaustiveSearcher(features2);
     [idx2,distance2] = knnsearch(ehSearcher2,features1,'K',2,'Distance','euclidean');
-    
-
     for i = 1:size(distance1,1)
         % if distance1(i,1)/distance1(i,2) < 2
         if(idx2(idx1(i,1),1) == i || idx2(idx1(i,1),2) == i )
