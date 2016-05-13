@@ -1,4 +1,4 @@
-function [cornerMap,R] = harrisCorner(imgIn,sigma1,sigma2,k)
+function [cornerMap,R,Gx,Gy] = harrisCorner(imgIn,sigma1,sigma2,k)
 	if(~exist('sigma1','var'))
 		sigma1 = 0.5;
 	end
@@ -6,7 +6,7 @@ function [cornerMap,R] = harrisCorner(imgIn,sigma1,sigma2,k)
 		sigma2 = 0.5;
 	end
 	if(~exist('k','var'))
-		k = 0.04;
+		k = 0.03;
 	end
 	if(size(imgIn,3) == 3)
 		grayImg = rgb2gray(imgIn/255);
@@ -31,6 +31,6 @@ function [cornerMap,R] = harrisCorner(imgIn,sigma1,sigma2,k)
 	cornerMap = imregionalmax(R);
 	cornerMap(:,1:2) = 0;
 	cornerMap(1:2,:) = 0;
-	cornerMap(:,end-2:end) = 0;
-	cornerMap(end-2:end,:) = 0;
+	cornerMap(:,end-1:end) = 0;
+	cornerMap(end-1:end,:) = 0;
 end
