@@ -9,6 +9,7 @@ I1 = im2double(I1);
 
 im1 = I1;
 I1 = I1*255;
+
 [cornerMap,R,Gx,Gy] = harrisCorner(I1(:,round(rangeX/2):end));
 [cornerMap1] = selectStrongestFeature(cornerMap,R,300);
 cornerMap1 = [zeros(size(I1,1),round(rangeX/2)-1) cornerMap1];
@@ -17,6 +18,7 @@ cornerMap1(rangeY:end,:) = 0;
 cornerMap1(:,rangeX:end) = 0;
 cornerMap1(:,1:round(rangeX/2)) = 0;
 % [features1,featuresRow1,featuresCol1] = featureDescriptionSIFT(I1,cornerMap1,Gx,Gy);
+
 [features1,featuresRow1,featuresCol1] = featureDescription(I1,cornerMap1);
 %fpds = SIFT(I1,cornerMap1);
 %featuresRow1 = fpds.fpX;
@@ -28,6 +30,7 @@ I2 = im2double(I2);
 
 im2 = I2;
 I2 = I2*255;
+
 [cornerMap2,R2] = harrisCorner(I2(:,1:round(rangeX/2)));
 [cornerMap2] = selectStrongestFeature(cornerMap2,R2,350);
 cornerMap2 = [cornerMap2 zeros(size(I2,1),size(I2,2)-round(rangeX/2))];
@@ -60,4 +63,31 @@ x = [featuresMatchCol1;featuresMatchCol2];
 y = [featuresMatchRow1;featuresMatchRow2];
 plot(x,y,'Color','r','LineWidth',1);
 %plot([featuresMatchCol1(1),featuresMatchCol2(1)],[featuresMatchRow1(1),featuresMatchRow2(1)],'Color','r','LineWidth',2);
+[m1,m2] = translationTransform(featuresMatchRow1,featuresMatchRow2,featuresMatchCol1,featuresMatchCol2);
+stichIm = zeros(size(im));
+imXRange = size(im,2);
+imYRange = size(im,1);
+im1XRange = size(im1,2);
+im1YRange = size(im1,1);
+im2XRange = size(im2,2);
+im2YRange = size(im2,1);
 
+m1
+m2
+
+%stichIm(1:im1XRange,1:im1YRange,:) = im1(1:im1XRange,1:im1YRange,:);
+%stichIm(im1XRange+1+m1:im1XRange+im2XRange+m1) = im2(1:im1)
+
+for x = 1:imXRange
+    for y = 1:imYRange
+        if(x<=im1XRange && y<=im1YRange)
+        stichIm(y,x,:) = im1(y,x,:);
+        end
+        if(x-m2-im1XRange<=im2XRange && x-m2-im2XRange>0 && y-m1<=im2YRange && y-m1>0)
+            stichIm(y,x,:) = im2(y-m1,x-im1XRange - m2,:);
+        end
+    end
+end
+
+figure;
+imshow(stichIm);
