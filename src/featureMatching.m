@@ -7,10 +7,10 @@ function [featuresMatchRow1,featuresMatchRow2,featuresMatchCol1,featuresMatchCol
     ehSearcher = ExhaustiveSearcher(features1);
     [idx,distance] = knnsearch(ehSearcher,features2,'K',2,'Distance','cosine');
     for i = 1:size(distance,1)
-        if distance(i,1)/distance(i,2) < 0.4
-            featuresMatchRow1 = [featuresMatchRow1,featuresRow1(i)];
+        if distance(i,1)/distance(i,2) < 0.9
+            featuresMatchRow1 = [featuresMatchRow1,featuresRow1(idx(i))];
             featuresMatchRow2 = [featuresMatchRow2,featuresRow2(i)];
-            featuresMatchCol1 = [featuresMatchCol1,featuresCol1(i)];
+            featuresMatchCol1 = [featuresMatchCol1,featuresCol1(idx(i))];
             featuresMatchCol2 = [featuresMatchCol2,featuresCol2(i)];
         end
     end
