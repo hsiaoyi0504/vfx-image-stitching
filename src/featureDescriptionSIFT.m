@@ -1,4 +1,4 @@
-function [features,featuresRow,featuresCol] = featureDescription(imgIn,featureMap,Gx,Gy)
+function [features,featuresRow,featuresCol] = featureDescriptionSIFT(imgIn,featureMap,Gx,Gy)
 	[row,col] = find(featureMap==1);
 	features = [];
 	featuresRow = [];
