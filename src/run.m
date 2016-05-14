@@ -5,54 +5,100 @@ clc
 totalRangeX = 0;
 m1 = 0;
 m2 = 0;
+% featureNum= [ 
+%     % 200,200; 
+%     % 200,200; 
+%     % 200,200; 
+%     % 200,200; 
+%     % 200,200; 
+%     % 200,200; 
+%     200,200; 
+%     % 200,200; 
+%     150,150; 
+%     % 150,50;
+%     % 200,200;
+%     % 300,300; 
+%     150, 50;
+%     % 250,250;
+%     100,50;
+%     % 200,200;
+% ];
+
 featureNum= [ 
-    200,50; 
-    200,200; 
-    200,200; 
-    200,200; 
-    200,200; 
     200,200; 
     200,200; 
     200,200; 
     200,200; 
     200,200;
-    200,200;
     200,200; 
-    200,200;
+    200,200; 
+    200,200; 
 ];
+
+featureNum = featureNum(end:-1:1,:);
+% focalLenth = [
+%     % 868.857,
+%     % 877.535,
+%     % 884.625,
+%     % 880.363,
+%     % 880.081,
+%     % 879.526,
+%     883.225,
+%     % 882.384,
+%     882.387,
+%     % 882.809,
+%     % 883.501,
+%     % 885.796,
+%     888.755,
+%     % 889.28,
+%     890.495
+%     % 891.982
+% ];
 focalLenth = [
-    601.232,
-    605.523,
-    606.295,
-    601.769,
-    600.557,
-    600.128,
-    600.627,
-    601.55,
-    603.522,
-    602.082,
-    600.082,
-    599.977
+    433.531,
+    429.726,
+    430.861,
+    433.589,
+    431.881,
+    432.317,
+    431.912,
+    432.49
 ];
+focalLenth = focalLenth(end:-1:1);
+% imageList = [
+%     % '../data/our/chaird/DSC00047.JPG';
+%     % '../data/our/chaird/DSC00048.JPG';
+%     % '../data/our/chaird/DSC00049.JPG';
+%     % '../data/our/chaird/DSC00050.JPG';
+%     % '../data/our/chaird/DSC00051.JPG';
+%     '../data/our/chaird/DSC00052.JPG';
+%     % '../data/our/chaird/DSC00053.JPG';
+%     % '../data/our/chaird/DSC00054.JPG';
+%     '../data/our/chaird/DSC00055.JPG';
+%     % '../data/our/chaird/DSC00056.JPG';
+%     % '../data/our/chaird/DSC00057.JPG';
+%     % '../data/our/chaird/DSC00058.JPG';
+%     '../data/our/chaird/DSC00059.JPG';
+%     % '../data/our/chaird/DSC00060.JPG';
+%     '../data/our/chaird/DSC00061.JPG';
+%     % '../data/our/chaird/DSC00062.JPG';
+% ];
 imageList = [
-    '../data/our/grass2/IMG_1132.JPG';
-    '../data/our/grass2/IMG_1133.JPG';
-    '../data/our/grass2/IMG_1134.JPG';
-    '../data/our/grass2/IMG_1135.JPG';
-    '../data/our/grass2/IMG_1136.JPG';
-    '../data/our/grass2/IMG_1137.JPG';
-    '../data/our/grass2/IMG_1138.JPG';
-    '../data/our/grass2/IMG_1139.JPG';
-    '../data/our/grass2/IMG_1140.JPG';
-    '../data/our/grass2/IMG_1141.JPG';
-    '../data/our/grass2/IMG_1142.JPG';
-    '../data/our/grass2/IMG_1143.JPG';
+    % '../data/our/2d/IMG_4422.JPG';
+    % '../data/our/2d/IMG_4424.JPG';
+    '../data/our/2d/IMG_4426.JPG';
+    '../data/our/2d/IMG_4427.JPG';
+    '../data/our/2d/IMG_4428.JPG';
+    '../data/our/2d/IMG_4429.JPG';
+    '../data/our/2d/IMG_4430.JPG';
+    '../data/our/2d/IMG_4431.JPG';
 ];
+
+imageList = imageList(end:-1:1,:);
+
 I1 = imread(imageList(1,:));
 I2 = [];
 I1 = im2double(I1);
-imshow(I1);
-
 [I1,rangeY1,rangeX1]= cylindricalProjection(I1,focalLenth(1));
 totalRangeX = totalRangeX+rangeX1;
 im1 = I1;
@@ -68,7 +114,7 @@ cornerMap1(:,rangeX1:end) = 0;
 cornerMap1(:,1:round(rangeX1/2)) = 0;
 [features1,featuresRow1,featuresCol1] = featureDescription(I1,cornerMap1);
 % [features1,featuresRow1,featuresCol1] = featureDescriptionSIFT(I1,cornerMap1,Gx,Gy);
-for p = 1:5
+for p=1:5
     I2 = imread(imageList(p+1,:));
     I2 = im2double(I2);
     [I2,rangeY2,rangeX2]= cylindricalProjection(I2,focalLenth(p+1));
@@ -100,8 +146,8 @@ for p = 1:5
     tmp_m2 = m2;
     %[m1,m2] = translationTransform(featuresMatchRow1,featuresMatchRow2,featuresMatchCol1,featuresMatchCol2);
     [m1,m2, goodFeaturesMatchRow1, goodFeaturesMatchRow2, goodFeaturesMatchCol1, goodFeaturesMatchCol2] = randsak(featuresMatchRow1,featuresMatchRow2,featuresMatchCol1,featuresMatchCol2,3,5000);
-	M1 = m1;
-	M2 = m2;   
+    M1 = m1;
+    M2 = m2;   
     m1 = m1+tmp_m1;
     m2 = m2+tmp_m2;
     max_m1 = max(m1,max_m1);
@@ -121,17 +167,18 @@ for p = 1:5
 
     % stichIm(max(m1+1,1):min(im1YRange-im2YRange+rangeY1,max(m1+1,1)+rangeY2-1),max(m2+1,1):min(im1XRange-im2XRange+rangeX1,max(m2+1,1)+rangeX2-1),:) =  ...
     % blending(im1(max(1,M1+1):min(M1+rangeY2,rangeY1),max(1,M2+1):min(M2+rangeX2,rangeX1),:),im2(max(1,1-M1):min(rangeY1-M1,rangeY2),max(1,1-M2):min(rangeX1-M2,rangeX2),:));
-	% size(stichIm(max(m1+1,tmp_m1+1):min(tmp_m1+rangeY1,max(m1+1,tmp_m1+1)+rangeY2-1),max(m2+1,tmp_m2+1):min(tmp_m2+rangeX1,max(m2+1,tmp_m2+1)+rangeX2-1),:))
-	% size(blending(im1(max(1,M1+1):min(M1+rangeY2,rangeY1),max(1,M2+1):min(M2+rangeX2,rangeX1),:),im2(max(1,1-M1):min(rangeY1-M1,rangeY2),max(1,1-M2):min(rangeX1-M2,rangeX2),:)))
-	stichIm(max(m1+1,tmp_m1+1):min(tmp_m1+rangeY1,m1+1+rangeY2-1),max(m2+1,tmp_m2+1):min(tmp_m2+rangeX1,m2+1+rangeX2-1),:) =  ...
+    % size(stichIm(max(m1+1,tmp_m1+1):min(tmp_m1+rangeY1,max(m1+1,tmp_m1+1)+rangeY2-1),max(m2+1,tmp_m2+1):min(tmp_m2+rangeX1,max(m2+1,tmp_m2+1)+rangeX2-1),:))
+    % size(blending(im1(max(1,M1+1):min(M1+rangeY2,rangeY1),max(1,M2+1):min(M2+rangeX2,rangeX1),:),im2(max(1,1-M1):min(rangeY1-M1,rangeY2),max(1,1-M2):min(rangeX1-M2,rangeX2),:)))
+   
+    stichIm(max(m1+1,tmp_m1+1):min(tmp_m1+rangeY1,m1+1+rangeY2-1),max(m2+1,tmp_m2+1):min(tmp_m2+rangeX1,m2+1+rangeX2-1),:) =  ...
     blending(im1(max(1,M1+1):min(M1+rangeY2,rangeY1),max(1,M2+1):min(M2+rangeX2,rangeX1),:),im2(max(1,1-M1):min(rangeY1-M1,rangeY2),max(1,1-M2):min(rangeX1-M2,rangeX2),:));
     
-    % figure;
-    % imshow(im1(max(1,M1+1):min(M1+rangeY2,rangeY1),max(1,M2+1):min(M2+rangeX2,rangeX1),:));
-    % figure;
-    % imshow(im2(max(1,1-M1):min(rangeY1-M1,rangeY2),max(1,1-M2):min(rangeX1-M2,rangeX2),:));
-    % figure;
-    % imshow(blending(im1(max(1,M1+1):min(M1+rangeY2,rangeY1),max(1,M2+1):min(M2+rangeX2,rangeX1),:),im2(max(1,1-M1):min(rangeY1-M1,rangeY2),max(1,1-M2):min(rangeX1-M2,rangeX2),:)));
+    figure;
+    imshow(im1(max(1,M1+1):min(M1+rangeY2,rangeY1),max(1,M2+1):min(M2+rangeX2,rangeX1),:));
+    figure;
+    imshow(im2(max(1,1-M1):min(rangeY1-M1,rangeY2),max(1,1-M2):min(rangeX1-M2,rangeX2),:));
+    figure;
+    imshow(blending(im1(max(1,M1+1):min(M1+rangeY2,rangeY1),max(1,M2+1):min(M2+rangeX2,rangeX1),:),im2(max(1,1-M1):min(rangeY1-M1,rangeY2),max(1,1-M2):min(rangeX1-M2,rangeX2),:)));
 
     figure;
     imshow(stichIm);
@@ -153,15 +200,17 @@ for p = 1:5
     cornerMap1(:,1:round(rangeX1/2)) = 0;
     totalRangeX = totalRangeX+rangeX1;
     [features1,featuresRow1,featuresCol1] = featureDescription(I1,cornerMap1);
+    % [features1,featuresRow1,featuresCol1] = featureDescriptionSIFT(I1,cornerMap1,Gx,Gy);
+
 end
 
 % close all
 finalRangeX = size(stichIm,2);
 while(stichIm(:,finalRangeX,:)==0)
-	finalRangeX = finalRangeX - 1;
+    finalRangeX = finalRangeX - 1;
 end
-stichIm = stichIm(max_m1:min_m1,1:finalRangeX,:);
-
+% stichIm = stichIm(max_m1:min_m1,1:finalRangeX,:);
+stichIm = stichIm(:,1:finalRangeX,:);
 
 
 figure;
