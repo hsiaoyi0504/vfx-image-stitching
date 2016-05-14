@@ -6,7 +6,8 @@ function [goodM1,goodM2, goodFeaturesMatchRow1, goodFeaturesMatchRow2, goodFeatu
     goodFeaturesMatchCol2 = [];
     goodInlier = -1;
     goodM1 = 0;
-    goodM2 = 0;   
+    goodM2 = 0;
+    rng(1)   
     for k = 1:K     
         randPerm = randperm(total);
         trainFeaturesMatchRow1 = featuresMatchRow1(randPerm(1:N));

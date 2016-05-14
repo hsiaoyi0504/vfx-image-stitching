@@ -1,7 +1,7 @@
 function [imgOut,rangeY,rangeX] = cylindricalProjection(imgIn,f)
 	imgOut = zeros(size(imgIn));
-	rangeY = floor(f * atan(size(imgIn,1)/f));
-	rangeX = size(imgIn,2);
+	rangeY = size(imgIn,1);
+	rangeX = floor(f*atan(size(imgIn,2)/f));
 	for i = 1:rangeX
 		for j = 1:rangeY
 			x = f * tan(i/f);
@@ -17,5 +17,11 @@ function [imgOut,rangeY,rangeX] = cylindricalProjection(imgIn,f)
 				end
 			end
 		end
+	end
+	while(imgOut(:,rangeX,:)==0)
+		rangeX = rangeX - 1;
+	end
+	while(imgOut(:,rangeX,:)==0)
+		rangeY = rangeY - 1;
 	end
 end
