@@ -5,51 +5,49 @@ clc
 totalRangeX = 0;
 m1 = 0;
 m2 = 0;
-featureNum= [
-    200,100; 
-    300,300;
-    300,300; 
-    200,200; 
-    200,200; 
+featureNum= [ 
     200,50; 
-    40,40; 
-    500,500; 
-    200,500;
-    500,500; 
-    200,500; 
-    200,500;
+    200,200; 
+    200,200; 
+    200,200; 
+    200,200; 
+    200,200; 
+    200,200; 
+    200,200; 
+    200,200; 
+    200,200;
+    200,200;
+    200,200; 
+    200,200;
 ];
-featureNum = featureNum(end:-1:1,:);
 focalLenth = [
-    546.907,
-    434.634,
-    433.531,
-    429.726,
-    429.106,
-    430.861,
-    433.589,
-    431.881,
-    432.317,
-    431.912,
-    432.49,
-    436.822
+    601.232,
+    605.523,
+    606.295,
+    601.769,
+    600.557,
+    600.128,
+    600.627,
+    601.55,
+    603.522,
+    602.082,
+    600.082,
+    599.977
 ];
-focalLenth = focalLenth(end:-1:1);
 imageList = [
-    '../data/our/2d/IMG_4420.JPG';
-	'../data/our/2d/IMG_4421.JPG';
-	'../data/our/2d/IMG_4422.JPG';
-    '../data/our/2d/IMG_4423.JPG';
-    '../data/our/2d/IMG_4424.JPG';
-    '../data/our/2d/IMG_4425.JPG';
-    '../data/our/2d/IMG_4426.JPG';
-    '../data/our/2d/IMG_4427.JPG';
-    '../data/our/2d/IMG_4428.JPG';
-    '../data/our/2d/IMG_4429.JPG';
-    '../data/our/2d/IMG_4430.JPG';
-    '../data/our/2d/IMG_4431.JPG';
+    '../data/our/grass2/IMG_1132.JPG';
+    '../data/our/grass2/IMG_1133.JPG';
+    '../data/our/grass2/IMG_1134.JPG';
+    '../data/our/grass2/IMG_1135.JPG';
+    '../data/our/grass2/IMG_1136.JPG';
+    '../data/our/grass2/IMG_1137.JPG';
+    '../data/our/grass2/IMG_1138.JPG';
+    '../data/our/grass2/IMG_1139.JPG';
+    '../data/our/grass2/IMG_1140.JPG';
+    '../data/our/grass2/IMG_1141.JPG';
+    '../data/our/grass2/IMG_1142.JPG';
+    '../data/our/grass2/IMG_1143.JPG';
 ];
-imageList = imageList(end:-1:1,:);
 I1 = imread(imageList(1,:));
 I2 = [];
 I1 = im2double(I1);
@@ -70,7 +68,7 @@ cornerMap1(:,rangeX1:end) = 0;
 cornerMap1(:,1:round(rangeX1/2)) = 0;
 [features1,featuresRow1,featuresCol1] = featureDescription(I1,cornerMap1);
 % [features1,featuresRow1,featuresCol1] = featureDescriptionSIFT(I1,cornerMap1,Gx,Gy);
-for p = 1:11
+for p = 1:5
     I2 = imread(imageList(p+1,:));
     I2 = im2double(I2);
     [I2,rangeY2,rangeX2]= cylindricalProjection(I2,focalLenth(p+1));
