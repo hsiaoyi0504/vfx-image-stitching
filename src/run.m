@@ -5,23 +5,21 @@ clc
 totalRangeX = 0;
 m1 = 0;
 m2 = 0;
-featureNum= [150,150; 200,150; 200,200; 100,50; 50,50; 150,150; 200,200; 200,200; 200,200;];
-focalLenth = [793.107,807.397,799.39,739.743,410.999,410.924,1724.53,1724.56,1724.25];
+featureNum= [1000,1000; 1000,1000; 1000,1000; 1000,1000; 500,500; 500,500; 500,500; 500,500; 500,500;];
+focalLenth = [546.907,543.386,541.092,538.651,529.85,538.59,538.958,544.775,540.218,541.612,539.678,539.917];
 imageList = [
-    '../data/our/1/IMG_4407.JPG';
-	'../data/our/1/IMG_4408.JPG';
-	'../data/our/1/IMG_4409.JPG';
-    '../data/our/1/IMG_4410.JPG';
-    '../data/our/1/IMG_4411.JPG';
-    '../data/our/1/IMG_4412.JPG';
-    '../data/our/1/IMG_4413.JPG';
-    '../data/our/1/IMG_4414.JPG';
-    '../data/our/1/IMG_4415.JPG';
-    '../data/our/1/IMG_4416.JPG';
-    '../data/our/1/IMG_4417.JPG';
-    '../data/our/1/IMG_4418.JPG';
-    '../data/our/1/IMG_4419.JPG';
-    '../data/our/1/IMG_4407.JPG';
+    '../data/our/2/IMG_4420.JPG';
+	'../data/our/2/IMG_4421.JPG';
+	'../data/our/2/IMG_4422.JPG';
+    '../data/our/2/IMG_4423.JPG';
+    '../data/our/2/IMG_4424.JPG';
+    '../data/our/2/IMG_4425.JPG';
+    '../data/our/2/IMG_4426.JPG';
+    '../data/our/2/IMG_4427.JPG';
+    '../data/our/2/IMG_4428.JPG';
+    '../data/our/2/IMG_4429.JPG';
+    '../data/our/2/IMG_4430.JPG';
+    '../data/our/2/IMG_4431.JPG';
 ];
 I1 = imread(imageList(1,:));
 I2 = [];
@@ -41,7 +39,7 @@ cornerMap1(:,rangeX1:end) = 0;
 cornerMap1(:,1:round(rangeX1/2)) = 0;
 [features1,featuresRow1,featuresCol1] = featureDescription(I1,cornerMap1);
 % [features1,featuresRow1,featuresCol1] = featureDescriptionSIFT(I1,cornerMap1,Gx,Gy);
-for p=1:8
+for p = 1:3
     I2 = imread(imageList(p+1,:));
     I2 = im2double(I2);
     [I2,rangeY2,rangeX2]= cylindricalProjection(I2,focalLenth(p+1));
