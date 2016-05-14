@@ -10,7 +10,7 @@ function [featuresMatchRow1,featuresMatchRow2,featuresMatchCol1,featuresMatchCol
     [idx2,distance2] = knnsearch(ehSearcher2,features1,'K',2,'Distance','euclidean');
     for i = 1:size(distance1,1)
         % if distance1(i,1)/distance1(i,2) < 2
-        if(idx2(idx1(i,1),1) == i || idx2(idx1(i,1),2) == i )
+        if((idx2(idx1(i,1),1) == i ))
             featuresMatchRow1 = [featuresMatchRow1,featuresRow1(idx1(i,1))];
             featuresMatchRow2 = [featuresMatchRow2,featuresRow2(i)];
             featuresMatchCol1 = [featuresMatchCol1,featuresCol1(idx1(i,1))];
