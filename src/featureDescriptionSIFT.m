@@ -6,15 +6,15 @@ function [features,featuresRow,featuresCol] = featureDescriptionSIFT(imgIn,featu
 	for i = 1:size(row,1)
 		if(row(i)-8 > 0 && row(i)+8 < size(imgIn,1) && col(i)-8 > 0 && col(i)+8 < size(imgIn,2))
 			feature = [];
-            for bx = -1:2
-                for by = -1:2
+            for bx = -2:1
+                for by = -2:1
                     blockFeature = zeros(1,8);
-                    blockGx = Gx(row(i)+bx*4:row(i)+(bx+1)*4,col(i)+by*4:col(i)+(by+1)*4);
-                    blockGy = Gy(row(i)+bx*4:row(i)+(bx+1)*4,col(i)+by*4:col(i)+(by+1)*4);
+                    blockGx = Gx(row(i)+by*4:row(i)+(by+1)*4,col(i)+bx*4:col(i)+(bx+1)*4);
+                    blockGy = Gy(row(i)+by*4:row(i)+(by+1)*4,col(i)+bx*4:col(i)+(bx+1)*4);
                     for x = 1:4
                         for y = 1:4
-                            gx = blockGx(x,y);
-                            gy = blockGy(x,y);
+                            gx = blockGx(y,x);
+                            gy = blockGy(y,x);
                             if(gx>=0&&gy>=0)
                                 if(gx>gy)
                                     blockFeature(1) = blockFeature(1) + 1;
